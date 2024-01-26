@@ -1,15 +1,15 @@
 // Import your modules. Adjust the paths according to your project structure.
-mod neuron;
-mod layer;
-mod network;
+// Import the modules
+mod kafka;
+mod neural_network;
 
-use neuron::Neuron;
-use layer::Layer;
-use network::NeuralNetwork;
+// Use items from the modules
+use kafka::consumer::ConsumerFunction;
+use neural_network::{layer::Layer, network::NeuralNetwork, neuron::Neuron};
 
-fn main() {
+#[tokio::main]
+async fn main() {
     // Example: Create a simple neural network with predefined weights and biases
-
     // Create neurons for the first layer
     let neuron1 = Neuron::new_with_weights(vec![0.5, 0.1], 0.0);
     let neuron2 = Neuron::new_with_weights(vec![0.3, -0.1], 0.1);
@@ -18,16 +18,13 @@ fn main() {
     let layer1 = Layer::new_with_neurons(vec![neuron1, neuron2]);
 
     // Repeat the above steps to create more layers if needed
+    let mut network = NeuralNetwork::new(&[...]);
+
+    // Start Kafka consumer and process messages
+    kafka_integration::start_kafka_consumer(&mut network).await;
 
     // Create a neural network with the layer(s)
     let mut network = NeuralNetwork::new_with_layers(vec![layer1]);
-
-    // Example input
-    let inputs = vec![
-        vec![1.0, 2.0, 5.0, 6.15, 9.4, 0.5, 3.5, 60.0, 99.9, 12.0, 35.15, 24.0],
-        vec![1.0, 3.0, 5.0, 6.15, 10.4, 0.5, 3.5, 65.0, 99.9, 15.0, 33.15, 24.0],
-        vec![1.0, 2.0, 5.0, 6.15, 35.4, 0.5, 5.5, 70.0, 15.9, 15.0, 35.15, 24.0]
-    ];
 
     // Forward the input through the network
     let output = network.forward_sequence(&inputs);
