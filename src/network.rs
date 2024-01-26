@@ -1,5 +1,5 @@
 use crate::layer::Layer;
-use crate::neuron::Neuron;
+
 
 pub struct NeuralNetwork {
     layers: Vec<Layer>,
