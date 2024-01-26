@@ -1,7 +1,6 @@
 use rdkafka::config::ClientConfig;
 use rdkafka::consumer::{Consumer, StreamConsumer};
 use rdkafka::Message;
-use tokio;
 use crate::kafka::message::KafkaMessage;
 use serde_json;
 use config::{Config, File};
